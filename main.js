@@ -1,6 +1,13 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  globalShortcut,
+  dialog,
+} = require("electron");
 const path = require("path"); //4th
 const windowStateKeeper = require("electron-window-state");
+const { globalAgent } = require("http");
 
 let win;
 
@@ -46,6 +53,16 @@ function createWindow() {
   globalShortcut.register("shift+k", () => {
     win.loadFile("child.html");
     console.log("shift+k pressed");
+  });
+  win.webContents.on("did-finish-load", () => {
+    dialog.showOpenDialog();
+  });
+  globalShortcut.register("shift+i", () => {
+    win.webContents.openDevTools();
+    dialog.showOpenDialog({
+      defaultPath: app.getPath("desktop"),
+      buttonLabel: "select file",
+    });
   });
   win.loadFile("index.html");
   console.log("State file path:", mainWindowState.path);
