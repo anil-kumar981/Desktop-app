@@ -1,29 +1,16 @@
-const { app, BrowserWindow, Menu } = require("electron");
-let template = [
-  {
-    label: "Home",
-    click: () => {
-      createWindow();
-    },
-  },
-  {
-    label: "About",
-    click: () => {
-      const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-      });
-      win.loadFile("about.html");
-    },
-  },
-];
-let menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: false,
+      contextIsolation: true,
+    },
   });
   win.loadFile("index.html");
+  win.webContents.openDevTools();
 }
 app.whenReady().then(createWindow);

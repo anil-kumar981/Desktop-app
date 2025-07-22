@@ -13,15 +13,17 @@
     <p id="msg"></p>
     <input type="range" style="-webkit-app-region: no-drag" />
     <button onclick="shareData()">share data</button>
+    <br />
+    <br />
+    <button onclick="zoomOut()">Zoom OUT</button>
+    <button onclick="zoomIn()">Zoom IN</button>
   </body>
   <script>
-    function shareData() {
-      //send data to preload  1st
-      window.api.shareData("hello form renderer");
-      //receive data form preloa
-      window.api.onShareData((data) => {
-        document.getElementById("msg").textContent = data;
-      });
+    function zoomOut() {
+      window.api.zoomOut();
+    }
+    function zoomIn() {
+      window.api.zoomIn();
     }
   </script>
 </html>
