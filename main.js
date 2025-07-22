@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, globalShortcut } = require("electron");
 const path = require("path"); //4th
 const windowStateKeeper = require("electron-window-state");
 
@@ -42,6 +42,10 @@ function createWindow() {
   });
   wc.on("before-input-event", () => {
     console.log("before-input-event");
+  });
+  globalShortcut.register("shift+k", () => {
+    win.loadFile("child.html");
+    console.log("shift+k pressed");
   });
   win.loadFile("index.html");
   console.log("State file path:", mainWindowState.path);
