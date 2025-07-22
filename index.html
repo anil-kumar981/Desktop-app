@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electron App</title>
+  </head>
+  <!-- for adding drag property -->
+  <body style="user-select: none; -webkit-app-region: drag">
+    <h2>Hello world</h2>
+    <!-- <a href="child.html" target="_blank">go to child</a> -->
+    <!-- target blank is used to open a new tab -->
+    <p id="msg"></p>
+    <input type="range" style="-webkit-app-region: no-drag" />
+    <button onclick="shareData()">share data</button>
+  </body>
+  <script>
+    function shareData() {
+      //send data to preload  1st
+      window.api.shareData("hello form renderer");
+      //receive data form preloa
+      window.api.onShareData((data) => {
+        document.getElementById("msg").textContent = data;
+      });
+    }
+  </script>
+</html>
